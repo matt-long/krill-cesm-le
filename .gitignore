@@ -1,0 +1,7 @@
+.ipynb_checkpoints/*
+*/*/.ipynb_checkpoints/*
+__pycache__/*
+*.swp
+figures/.ipynb_checkpoints/*
+data/.ipynb_checkpoints/*
+*/.ipynb_checkpoints/*

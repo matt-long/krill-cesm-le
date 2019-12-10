@@ -1,0 +1,50 @@
+name: krill
+channels:
+- conda-forge
+- defaults
+dependencies:
+- bottleneck
+- cartopy
+- cf_units
+- cftime
+- cmocean
+- dask
+- distributed
+- dask-jobqueue
+- dask-mpi
+- esmlab
+- esmpy
+- intake
+- intake-esm
+- ipywidgets
+- jupyter_contrib_nbextensions
+- jupyterlab
+- matplotlib
+- metpy
+- nc-time-axis
+- netcdf4
+- numba
+- numpy
+- pandas
+- pint
+- pip
+- pytest
+- python=3.7
+- scipy
+- seaborn
+- seawater
+- statsmodels
+- tabulate
+- toolz
+- tqdm
+- watermark
+- xarray
+- xesmf
+- xgcm
+- xhistogram
+- xrft
+- zarr
+- pip:
+  - git+https://github.com/NCAR/pop-tools.git
+  - git+https://github.com/matt-long/xpersist.git
+  - ncar-jobqueue

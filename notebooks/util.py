@@ -1,6 +1,6 @@
 import numpy as np
 import xarray as xr
-
+import pandas as pd
 
 def pop_add_cyclic(ds):
     
@@ -65,3 +65,20 @@ def pop_add_cyclic(ds):
                 
             
     return dso
+
+
+def orsi_fronts():
+    """Return a dictionary of dataframes with lon, lat coords of fronts 
+    from Orsi et al. 1995
+    
+    Orsi, A. H., T. Whitworth III and W. D. Nowlin, Jr. (1995). On the 
+    meridional extent and fronts of the Antarctic Circumpolar Current, 
+    Deep-Sea Research I, 42, 641-673.
+    """
+    
+    fronts = {}
+    for f in ['STF','SAF','PF','SACCF','SBDY']:
+        fronts[f] = pd.read_table(f'data/orsi-fronts/{f.lower()}.txt', sep='\s+',
+                                  names=['lon','lat'],
+                                  comment='%')
+    return fronts

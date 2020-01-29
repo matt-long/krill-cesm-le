@@ -1,0 +1,16 @@
+{
+    "_ARRAY_DIMENSIONS": [
+        "month",
+        "lat",
+        "lon"
+    ],
+    "display_max": 20.0,
+    "display_min": 0.009999999776482582,
+    "display_scale": "log",
+    "long_name": "Chlorophyll Concentration, GSM model",
+    "reference": "Maritorena S., D.A. Siegel and A. Peterson, Optimization of a Semi-Analytical Ocean Color Model for Global Scale Applications, Applied  Optics,  41(15): 2705-2714, 2002.",
+    "standard_name": "mass_concentration_chlorophyll_concentration_in_sea_water",
+    "units": "mg m^-3",
+    "valid_max": 100.0,
+    "valid_min": 0.0010000000474974513
+}

@@ -82,3 +82,65 @@ def orsi_fronts():
                                   names=['lon','lat'],
                                   comment='%')
     return fronts
+
+
+
+def infer_lat_name(ds):
+    lat_names = ['latitude', 'lat']
+    for n in lat_names:
+        if n in ds:
+            return n
+    raise ValueError('could not determine lat name')    
+
+
+def infer_lon_name(ds):
+    lon_names = ['longitude', 'lon']
+    for n in lon_names:
+        if n in ds:
+            return n
+    raise ValueError('could not determine lon name')    
+
+
+def compute_grid_area(ds, dx=None, dy=None, check_total=True):
+    Re = 6.37122e6 # m, radius of Earth
+    deg2rad = np.pi/180.
+
+    lon_name = infer_lon_name(ds)
+    lon = ds[lon_name].values
+    
+    lat_name = infer_lat_name(ds)        
+    lat = ds[lat_name].values
+    
+    if dx is None:
+        dx = np.diff(lon)
+        np.testing.assert_almost_equal(dx, dx[0])
+        dx = np.float(dx[0])
+        
+    if dy is None:        
+        dy = np.diff(lat)
+        np.testing.assert_almost_equal(dy, dy[0])
+        dy = np.float(dy[0])
+        
+    ny = lat.shape[0]
+    nx = lon.shape[0]
+
+    # generated 2D arrays of cell centers
+    yc = np.broadcast_to(lat[:, None], (ny, nx))
+    xc = np.broadcast_to(lon[None, :], (ny, nx))
+
+    # generate arrays of cell vertices
+    yv = np.stack((yc-dy/2., yc-dy/2., yc+dy/2., yc+dy/2.), axis=2)
+    xv = np.stack((xc-dx/2., xc+dx/2., xc+dx/2., xc-dx/2.), axis=2)
+
+    # compute chord lengths
+    y0 = np.sin(yv[:, :, 0]*deg2rad) # south
+    y1 = np.sin(yv[:, :, 3]*deg2rad) # north
+    x0 = xv[:, :, 0] * deg2rad         # west
+    x1 = xv[:, :, 1] * deg2rad         # east
+    area = (y1 - y0) * (x1 - x0) * Re**2
+
+    if check_total:
+        np.testing.assert_approx_equal(np.sum(area), 4.*np.pi*Re**2.)
+    
+    ds['area'] = xr.DataArray(area, dims=(lat_name, lon_name), 
+                              attrs={'units': 'm^2', 'long_name': 'area'})  

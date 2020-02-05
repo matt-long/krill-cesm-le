@@ -125,22 +125,31 @@ def compute_grid_area(ds, dx=None, dy=None, check_total=True):
     nx = lon.shape[0]
 
     # generated 2D arrays of cell centers
-    yc = np.broadcast_to(lat[:, None], (ny, nx))
-    xc = np.broadcast_to(lon[None, :], (ny, nx))
+    y_center = np.broadcast_to(lat[:, None], (ny, nx))
+    x_center = np.broadcast_to(lon[None, :], (ny, nx))
 
-    # generate arrays of cell vertices
-    yv = np.stack((yc-dy/2., yc-dy/2., yc+dy/2., yc+dy/2.), axis=2)
-    xv = np.stack((xc-dx/2., xc+dx/2., xc+dx/2., xc-dx/2.), axis=2)
+    # compute corner points
+    y_corner = np.stack((y_center - dy / 2.,  # SW
+                         y_center - dy / 2.,  # SE
+                         y_center + dy / 2.,  # NE
+                         y_center + dy / 2.), # NW
+                        axis=2)
 
-    # compute chord lengths
-    y0 = np.sin(yv[:, :, 0]*deg2rad) # south
-    y1 = np.sin(yv[:, :, 3]*deg2rad) # north
-    x0 = xv[:, :, 0] * deg2rad         # west
-    x1 = xv[:, :, 1] * deg2rad         # east
-    area = (y1 - y0) * (x1 - x0) * Re**2
-
-    if check_total:
-        np.testing.assert_approx_equal(np.sum(area), 4.*np.pi*Re**2.)
+    x_corner = np.stack((x_center - dx / 2.,  # SW
+                         x_center + dx / 2.,  # SE
+                         x_center + dx / 2.,  # NE
+                         x_center - dx / 2.), # NW
+                        axis=2)
     
+    # compute chord lengths
+    y0 = np.sin(y_corner[:, :, 0] * np.pi / 180) # south
+    y1 = np.sin(y_corner[:, :, 3] * np.pi / 180) # north
+    x0 = x_corner[:, :, 0] * np.pi / 180         # west
+    x1 = x_corner[:, :, 1] * np.pi / 180         # east
+    area = (y1 - y0) * (x1 - x0) * Re**2
+    
+    if check_total:
+        np.testing.assert_approx_equal(np.sum(area), 4 * np.pi * Re**2)
+        
     ds['area'] = xr.DataArray(area, dims=(lat_name, lon_name), 
                               attrs={'units': 'm^2', 'long_name': 'area'})  

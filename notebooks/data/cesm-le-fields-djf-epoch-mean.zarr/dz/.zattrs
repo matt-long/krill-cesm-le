@@ -1,0 +1,8 @@
+{
+    "_ARRAY_DIMENSIONS": [
+        "z_t"
+    ],
+    "long_name": "thickness of layer k",
+    "missing_value": 9.969209968386869e+36,
+    "units": "centimeters"
+}

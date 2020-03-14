@@ -1,0 +1,13 @@
+{
+    "_ARRAY_DIMENSIONS": [
+        "epoch",
+        "member_id",
+        "nlat",
+        "nlon"
+    ],
+    "cell_methods": "time: mean",
+    "coordinates": "ULAT TAREA TLAT TLONG KMT ULONG",
+    "grid_loc": "3111",
+    "long_name": "Potential Temperature",
+    "units": "degC"
+}

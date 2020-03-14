@@ -1,0 +1,10 @@
+{
+    "_ARRAY_DIMENSIONS": [
+        "time",
+        "length",
+        "member_id",
+        "region"
+    ],
+    "long_name": "Daily growth rate",
+    "units": "mm d$^{-1}$"
+}

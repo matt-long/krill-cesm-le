@@ -1,0 +1,13 @@
+{
+    "_ARRAY_DIMENSIONS": [
+        "epoch",
+        "member_id",
+        "nlat",
+        "nlon"
+    ],
+    "cell_methods": "time: mean",
+    "coordinates": "ULAT TAREA TLAT TLONG KMT ULONG",
+    "grid_loc": "3114",
+    "long_name": "Surface chlorophyll",
+    "units": "mg/m^3"
+}

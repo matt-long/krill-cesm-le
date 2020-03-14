@@ -1,6 +1,24 @@
+import os
+import shutil
+
 import numpy as np
 import xarray as xr
 import pandas as pd
+
+
+def write_ds_out(dso, file_out):
+    file_out = os.path.realpath(file_out)
+
+    os.makedirs(os.path.dirname(file_out), exist_ok=True)
+
+    if os.path.exists(file_out):
+        shutil.rmtree(file_out)
+    print('-'*30)
+    print(f'Writing {file_out}')
+    dso.info()
+    print()
+    dso.to_zarr(file_out);
+
 
 def pop_add_cyclic(ds):
     
@@ -153,3 +171,68 @@ def compute_grid_area(ds, dx=None, dy=None, check_total=True):
         
     ds['area'] = xr.DataArray(area, dims=(lat_name, lon_name), 
                               attrs={'units': 'm^2', 'long_name': 'area'})  
+
+    
+def ann_mean(ds, season=None, time_bnds_varname='time_bnds'):
+    """Compute annual means, or optionally seasonal means"""
+    ds = ds.copy(deep=True)
+
+    group_by_year = 'time.year'
+    rename = {'year': 'time'}
+    
+    ones = xr.full_like(ds.time, fill_value=1)
+    
+    if season is not None:
+        season = season.upper()
+        if season not in ['DJF', 'MAM', 'JJA', 'SON']:
+            raise ValueError(f'unknown season: {season}')            
+
+        ds = ds.where(ds['time.season'] == season)      
+        ones = ones.where(ds['time.season'] == season) 
+        ds['austral_year'] = xr.where(ds['time.month'] > 6, ds['time.year'] + 1, ds['time.year'])
+
+        ds = ds.set_coords('austral_year')
+        ones = ones.assign_coords({'austral_year': ds.austral_year})
+
+        if season == 'DJF':
+            group_by_year = 'austral_year'
+            rename = {'austral_year': 'time'}
+           
+    time_wgt = ds[time_bnds_varname].diff(dim=ds[time_bnds_varname].dims[1])
+    if time_wgt.dtype == '<m8[ns]':
+        time_wgt = time_wgt / np.timedelta64(1, 'D')
+    
+    time_wgt_grouped = time_wgt.groupby(group_by_year, restore_coord_dims=False)
+    time_wgt = time_wgt_grouped / time_wgt_grouped.sum(dim=xr.ALL_DIMS)
+        
+    nyr = len(time_wgt_grouped.groups)
+         
+    time_wgt = time_wgt.squeeze()
+
+    np.testing.assert_almost_equal(time_wgt.groupby(group_by_year).sum(dim=xr.ALL_DIMS), 
+                                   np.ones(nyr))
+
+    nontime_vars = set([v for v in ds.variables if 'time' not in ds[v].dims]) - set(ds.coords)
+    dsop = ds.set_coords(nontime_vars).drop(time_bnds_varname)
+    
+    ds_ann = (dsop * time_wgt).groupby(group_by_year, restore_coord_dims=False).sum(dim='time')
+    count_ann = ones.groupby(group_by_year, restore_coord_dims=False).sum(dim='time')
+    
+    # copy attrs
+    for v in ds_ann:
+        ds_ann[v].attrs = ds[v].attrs
+
+    # rename time
+    ds_ann = ds_ann.reset_coords(nontime_vars).rename(rename)
+    
+    # eliminate partials
+    if season is not None:
+        ndx = (count_ann == 3).values
+    else:
+        ndx = (count_ann >= 8).values
+
+    if not ndx.all():
+        ds_ann = ds_ann.isel(time=ndx)
+
+    return ds_ann
+    

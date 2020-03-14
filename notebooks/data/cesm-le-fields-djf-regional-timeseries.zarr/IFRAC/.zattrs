@@ -1,0 +1,11 @@
+{
+    "_ARRAY_DIMENSIONS": [
+        "time",
+        "member_id",
+        "region"
+    ],
+    "cell_methods": "time: mean",
+    "grid_loc": "2110",
+    "long_name": "Ice Fraction from Coupler",
+    "units": "fraction"
+}

@@ -3,6 +3,7 @@ channels:
 - conda-forge
 - defaults
 dependencies:
+- bokeh==1.4.0
 - bottleneck
 - cartopy
 - cf_units

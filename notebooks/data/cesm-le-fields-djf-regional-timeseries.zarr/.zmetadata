@@ -1,0 +1,252 @@
+{
+    "metadata": {
+        ".zattrs": {},
+        ".zgroup": {
+            "zarr_format": 2
+        },
+        "Chl_surf/.zarray": {
+            "chunks": [
+                180,
+                34,
+                2
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f8",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                180,
+                34,
+                2
+            ],
+            "zarr_format": 2
+        },
+        "Chl_surf/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "time",
+                "member_id",
+                "region"
+            ],
+            "cell_methods": "time: mean",
+            "grid_loc": "3114",
+            "long_name": "Surface chlorophyll",
+            "units": "mg/m^3"
+        },
+        "IFRAC/.zarray": {
+            "chunks": [
+                180,
+                34,
+                2
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f8",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                180,
+                34,
+                2
+            ],
+            "zarr_format": 2
+        },
+        "IFRAC/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "time",
+                "member_id",
+                "region"
+            ],
+            "cell_methods": "time: mean",
+            "grid_loc": "2110",
+            "long_name": "Ice Fraction from Coupler",
+            "units": "fraction"
+        },
+        "KGP/.zarray": {
+            "chunks": [
+                90,
+                3,
+                34,
+                2
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f8",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                180,
+                3,
+                34,
+                2
+            ],
+            "zarr_format": 2
+        },
+        "KGP/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "time",
+                "length",
+                "member_id",
+                "region"
+            ],
+            "long_name": "Daily growth rate",
+            "units": "mm d$^{-1}$"
+        },
+        "SST/.zarray": {
+            "chunks": [
+                180,
+                34,
+                2
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f8",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                180,
+                34,
+                2
+            ],
+            "zarr_format": 2
+        },
+        "SST/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "time",
+                "member_id",
+                "region"
+            ],
+            "cell_methods": "time: mean",
+            "grid_loc": "3111",
+            "long_name": "Potential Temperature",
+            "units": "degC"
+        },
+        "length/.zarray": {
+            "chunks": [
+                3
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f8",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                3
+            ],
+            "zarr_format": 2
+        },
+        "length/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "length"
+            ],
+            "long_name": "Krill body length",
+            "units": "mm"
+        },
+        "member_id/.zarray": {
+            "chunks": [
+                34
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<i8",
+            "fill_value": null,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                34
+            ],
+            "zarr_format": 2
+        },
+        "member_id/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "member_id"
+            ]
+        },
+        "region/.zarray": {
+            "chunks": [
+                2
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<U14",
+            "fill_value": null,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                2
+            ],
+            "zarr_format": 2
+        },
+        "region/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "region"
+            ]
+        },
+        "time/.zarray": {
+            "chunks": [
+                180
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<i8",
+            "fill_value": null,
+            "filters": null,
+            "order": "C",
+            "shape": [
+                180
+            ],
+            "zarr_format": 2
+        },
+        "time/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "time"
+            ]
+        }
+    },
+    "zarr_consolidated_format": 1
+}

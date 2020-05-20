@@ -6,6 +6,9 @@ import xarray as xr
 import pandas as pd
 
 
+project_tmpdir = '/glade/p/cgd/oce/projects/krill-cesm-le/data'
+
+
 def write_ds_out(dso, file_out):
     file_out = os.path.realpath(file_out)
 

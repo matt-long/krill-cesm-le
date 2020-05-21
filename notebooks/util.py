@@ -238,4 +238,21 @@ def ann_mean(ds, season=None, time_bnds_varname='time_bnds'):
         ds_ann = ds_ann.isel(time=ndx)
 
     return ds_ann
-    
+
+
+def linear_trend(da, dim='time'):
+    da_chunk = da.chunk({dim: -1})
+    trend = xr.apply_ufunc(calc_slope,
+                           da_chunk,
+                           vectorize=True,
+                           input_core_dims=[[dim]],
+                           output_core_dims=[[]],
+                           output_dtypes=[np.float],
+                           dask='parallelized')
+    return trend
+
+
+def calc_slope(y):
+    """ufunc to be used by linear_trend"""
+    x = np.arange(len(y))
+    return np.polyfit(x, y, 1)[0]

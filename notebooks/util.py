@@ -256,3 +256,48 @@ def calc_slope(y):
     """ufunc to be used by linear_trend"""
     x = np.arange(len(y))
     return np.polyfit(x, y, 1)[0]
+
+
+
+def compute_kgp(ds, length):
+    """Compute Krill Growth Potential
+
+    Natural growth rates in Antarctic krill (Euphausia superba)
+    doi: 10.4319/lo.2006.51.2.0973
+    A Atkinson, RS Shreeve, AG Hirst, P Rothery, GA Tarling
+    Limnol Oceanogr, 2006
+
+    """
+
+    # specify params
+    a = -0.066
+    b = 0.002
+    c = -0.000061
+    d = 0.385
+    e = 0.328
+    f = 0.0078
+    g = -0.0101
+
+    # local pointers
+    sst = ds.SST
+    chl = ds.Chl_surf
+
+    # compute terms and sum
+    length_term = a + (b * length) + (c * length**2)
+    chl_term = (d * (chl / (e + chl)))
+    sst_term = (f * sst) + (g * sst**2)
+
+    kgp = length_term + chl_term + sst_term
+    kgp.name = 'KGP'
+
+    # mask based on SST range
+    kgp = kgp.where((-1. <= sst) & (sst <= 5.)).fillna(0.).where(ds.KMT > 0)
+
+    # add coordinates
+    kgp = kgp.assign_coords({'length': length})
+    kgp = kgp.assign_coords({'TLONG': ds.TLONG, 'TLAT': ds.TLAT})
+
+    # add attrs
+    kgp.attrs = {'units': 'mm d$^{-1}$', 'long_name': 'Daily growth rate'}
+    ds['KGP'] = kgp
+    return ds

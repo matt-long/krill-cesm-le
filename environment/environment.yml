@@ -5,7 +5,7 @@ channels:
 dependencies:
 - bokeh==1.4.0
 - bottleneck
-- cartopy
+- cartopy>=0.18.0
 - cf_units
 - cftime
 - cmocean
@@ -17,6 +17,7 @@ dependencies:
 - esmpy
 - graphviz
 - intake
+- intake-esm
 - ipywidgets
 - jupyter_contrib_nbextensions
 - jupyterlab
@@ -29,6 +30,8 @@ dependencies:
 - pandas
 - pint
 - pip
+- proj>=7.0.0
+- pyproj>=2.6.0
 - pytest
 - python=3.7
 - scipy
@@ -46,8 +49,7 @@ dependencies:
 - xrft
 - zarr
 - pip:
-  - git+https://github.com/NCAR/intake-esm.git
-  - git+https://github.com/NCAR/esmlab-regrid.git
   - git+https://github.com/NCAR/pop-tools.git
   - git+https://github.com/matt-long/xpersist.git
   - ncar-jobqueue
+

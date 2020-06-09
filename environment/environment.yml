@@ -9,12 +9,13 @@ dependencies:
 - cf_units
 - cftime
 - cmocean
-- dask
-- distributed
+- dask==2.14.0
+- distributed==2.14.0
 - dask-jobqueue
 - dask-mpi
 - esmlab
 - esmpy
+- graphviz
 - intake
 - ipywidgets
 - jupyter_contrib_nbextensions
@@ -46,6 +47,7 @@ dependencies:
 - zarr
 - pip:
   - git+https://github.com/NCAR/intake-esm.git
+  - git+https://github.com/NCAR/esmlab-regrid.git
   - git+https://github.com/NCAR/pop-tools.git
   - git+https://github.com/matt-long/xpersist.git
   - ncar-jobqueue

@@ -457,10 +457,12 @@ def esmf_apply_weights(weights, indata, shape_in, shape_out):
             )
 
         assert shape_in[0] * shape_in[1] == weights.shape[1], (
-            "ny_in * nx_in should equal to weights.shape[1]")
+            "ny_in * nx_in should equal to weights.shape[1]"
+        )
 
         assert shape_out[0] * shape_out[1] == weights.shape[0], (
-            "ny_out * nx_out should equal to weights.shape[0]")
+            "ny_out * nx_out should equal to weights.shape[0]"
+        )
 
         # use flattened array for dot operation
         indata_flat = indata.reshape(-1, shape_in[0]*shape_in[1])
@@ -472,8 +474,12 @@ def esmf_apply_weights(weights, indata, shape_in, shape_out):
         return outdata
     
 class regridder(object):
+    """simple class to enable regridding"""
+    
     def __init__(self, src_grid_file, dst_grid_file, weight_file):
         
+        # TODO: do I actually need the grid files here?
+        #       shouldn't all the information be in the weight file?
         self.src_grid_file = src_grid_file
         self.dst_grid_file = dst_grid_file
         
@@ -499,6 +505,7 @@ class regridder(object):
         return (
             f'regridder {os.path.basename(self.src_grid_file)} --> {os.path.basename(self.dst_grid_file)}'
         )
+    
     def regrid_dataarray(self, da_in, renormalize=True, apply_mask=True):
         """regrid DataArray"""
         # Pull data, dims and coords from incoming DataArray
@@ -517,6 +524,9 @@ class regridder(object):
         )
 
         # Renormalize to include non-missing data_src
+        # TODO: it would be nice to include a threshold here,
+        #       the user could specify a fraction of mapped points, 
+        #       below which the value yields missing in the data_dst
         if renormalize:
             old_err_settings = np.seterr(invalid='ignore')
             ones_dst = esmf_apply_weights(

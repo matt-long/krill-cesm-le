@@ -143,6 +143,42 @@
             "cell_methods": "time: mean",
             "grid_loc": "3111",
             "long_name": "Potential Temperature",
+            "note": "bias corrected using HadISST; reference period 1981-2015",
+            "units": "degC"
+        },
+        "SST_orig/.zarray": {
+            "chunks": [
+                180,
+                34,
+                2
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f8",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                180,
+                34,
+                2
+            ],
+            "zarr_format": 2
+        },
+        "SST_orig/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "time",
+                "member_id",
+                "region"
+            ],
+            "cell_methods": "time: mean",
+            "grid_loc": "3111",
+            "long_name": "Potential Temperature",
             "units": "degC"
         },
         "length/.zarray": {

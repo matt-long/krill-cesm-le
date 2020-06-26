@@ -40,7 +40,7 @@
                 "nlon"
             ],
             "cell_methods": "time: mean",
-            "coordinates": "TLONG ULAT TLAT TAREA KMT ULONG",
+            "coordinates": "TAREA TLONG ULAT ULONG KMT TLAT",
             "grid_loc": "3114",
             "long_name": "Surface chlorophyll",
             "units": "mg/m^3"
@@ -79,7 +79,7 @@
                 "nlon"
             ],
             "cell_methods": "time: mean",
-            "coordinates": "TLONG ULAT TLAT TAREA KMT ULONG",
+            "coordinates": "TAREA TLONG ULAT ULONG KMT TLAT",
             "grid_loc": "2110",
             "long_name": "Ice Fraction from Coupler",
             "units": "fraction"
@@ -120,7 +120,7 @@
                 "nlat",
                 "nlon"
             ],
-            "coordinates": "TLONG ULAT TLAT TAREA KMT ULONG",
+            "coordinates": "TAREA TLONG ULAT ULONG KMT TLAT",
             "long_name": "Daily growth rate",
             "units": "mm d$^{-1}$"
         },
@@ -189,7 +189,47 @@
                 "nlon"
             ],
             "cell_methods": "time: mean",
-            "coordinates": "TLONG ULAT TLAT TAREA KMT ULONG",
+            "coordinates": "TAREA TLONG ULAT ULONG KMT TLAT",
+            "grid_loc": "3111",
+            "long_name": "Potential Temperature",
+            "note": "bias corrected using HadISST; reference period 1981-2015",
+            "units": "degC"
+        },
+        "SST_orig/.zarray": {
+            "chunks": [
+                1,
+                9,
+                47,
+                160
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f8",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                2,
+                34,
+                93,
+                320
+            ],
+            "zarr_format": 2
+        },
+        "SST_orig/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "epoch",
+                "member_id",
+                "nlat",
+                "nlon"
+            ],
+            "cell_methods": "time: mean",
+            "coordinates": "TAREA TLONG ULAT ULONG KMT TLAT",
             "grid_loc": "3111",
             "long_name": "Potential Temperature",
             "units": "degC"

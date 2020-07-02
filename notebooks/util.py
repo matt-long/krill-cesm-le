@@ -2,6 +2,7 @@ import os
 import shutil
 
 from datetime import datetime
+import cftime
 
 import scipy.sparse as sps
 import numpy as np
@@ -181,42 +182,66 @@ def compute_grid_area(ds, dx=None, dy=None, check_total=True):
                               attrs={'units': 'm^2', 'long_name': 'area'})  
 
     
-def ann_mean(ds, season=None, time_bnds_varname='time_bnds'):
+def ann_mean(ds, season=None, time_bnds_varname='time_bnds', time_centered=False):
     """Compute annual means, or optionally seasonal means"""
-    ds = ds.copy(deep=True)
+    ds = ds.copy() #deep=True)
 
     group_by_year = 'time.year'
     rename = {'year': 'time'}
     
-    ones = xr.full_like(ds.time, fill_value=1)
+    if not time_centered:
+        time_units = ds.time.encoding['units']
+        time_calendar = ds.time.encoding['calendar']
+
+        # compute time bounds array
+        time_bound_data = cftime.date2num(
+                ds[time_bnds_varname].data, 
+                units=time_units, 
+                calendar=time_calendar)    
+
+        # center time
+        time_centered = cftime.num2date(
+            time_bound_data.mean(axis=1),
+            units=time_units, 
+            calendar=time_calendar
+        )        
+        time_attrs = ds.time.attrs
+        time_encoding = ds.time.encoding
+
+        ds['time'] = xr.DataArray(
+            time_centered,
+            dims=('time')
+        )    
     
+    ones = xr.full_like(ds.time, fill_value=1)
+    time_mask = xr.full_like(ds.time, fill_value=1)
     if season is not None:
         season = season.upper()
         if season not in ['DJF', 'MAM', 'JJA', 'SON']:
             raise ValueError(f'unknown season: {season}')            
 
-        ds = ds.where(ds['time.season'] == season)      
-        ones = ones.where(ds['time.season'] == season) 
         ds['austral_year'] = xr.where(ds['time.month'] > 6, ds['time.year'] + 1, ds['time.year'])
-
         ds = ds.set_coords('austral_year')
         ones = ones.assign_coords({'austral_year': ds.austral_year})
 
+        time_mask = time_mask.where(ds['time.season'] == season).fillna(0)
+        
         if season == 'DJF':
             group_by_year = 'austral_year'
             rename = {'austral_year': 'time'}
 
-    time_wgt = ds[time_bnds_varname].diff(dim=ds[time_bnds_varname].dims[1])
+    time_wgt = ds[time_bnds_varname].diff(dim=ds[time_bnds_varname].dims[1]).where(time_mask==1).fillna(0.)
+    ones = ones.where(time_mask==1)
+    
     if time_wgt.dtype == '<m8[ns]':
         time_wgt = time_wgt / np.timedelta64(1, 'D')
-    
+
     time_wgt_grouped = time_wgt.groupby(group_by_year, restore_coord_dims=False)
     time_wgt = time_wgt_grouped / time_wgt_grouped.sum(dim=xr.ALL_DIMS)
-        
+    
     nyr = len(time_wgt_grouped.groups)
          
     time_wgt = time_wgt.squeeze()
-
     np.testing.assert_almost_equal(time_wgt.groupby(group_by_year).sum(dim=xr.ALL_DIMS), 
                                    np.ones(nyr))
 
@@ -232,7 +257,8 @@ def ann_mean(ds, season=None, time_bnds_varname='time_bnds'):
 
     # rename time
     ds_ann = ds_ann.reset_coords(nontime_vars).rename(rename)
-    
+
+
     # eliminate partials
     if season is not None:
         ndx = (count_ann == 3).values

@@ -6,7 +6,7 @@
         "nlon"
     ],
     "cell_methods": "time: mean",
-    "coordinates": "TAREA TLONG ULAT ULONG KMT TLAT",
+    "coordinates": "TAREA TLONG ULONG ULAT KMT TLAT",
     "grid_loc": "3114",
     "long_name": "Surface chlorophyll",
     "units": "mg/m^3"

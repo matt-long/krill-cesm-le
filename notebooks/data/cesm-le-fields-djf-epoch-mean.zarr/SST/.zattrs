@@ -6,7 +6,7 @@
         "nlon"
     ],
     "cell_methods": "time: mean",
-    "coordinates": "ULAT TLONG TAREA KMT TLAT ULONG",
+    "coordinates": "TAREA ULAT ULONG TLAT KMT TLONG",
     "grid_loc": "3111",
     "long_name": "Potential Temperature",
     "units": "degC"

@@ -402,7 +402,7 @@ def latlon_to_scrip(nx, ny, lon0=-180., grid_imask=None, file_out=None):
     return dso
 
 
-def compute_kgp(ds, length):
+def compute_kgp(ds, sst, chl, length, kmt):
     """Compute Krill Growth Potential
 
     Natural growth rates in Antarctic krill (Euphausia superba)
@@ -421,9 +421,6 @@ def compute_kgp(ds, length):
     f = 0.0078
     g = -0.0101
 
-    # local pointers
-    sst = ds.SST
-    chl = ds.Chl_surf
 
     # compute terms and sum
     length_term = a + (b * length) + (c * length**2)
@@ -434,16 +431,16 @@ def compute_kgp(ds, length):
     kgp.name = 'KGP'
 
     # mask based on SST range
-    kgp = kgp.where((-1. <= sst) & (sst <= 5.)).fillna(0.).where(ds.KMT > 0)
+    kgp = kgp.where((-1. <= sst) & (sst <= 5.)).fillna(0.).where(kmt > 0)
 
     # add coordinates
     kgp = kgp.assign_coords({'length': length})
-    kgp = kgp.assign_coords({'TLONG': ds.TLONG, 'TLAT': ds.TLAT})
+    #kgp = kgp.assign_coords({'TLONG': ds.TLONG, 'TLAT': ds.TLAT})
 
     # add attrs
     kgp.attrs = {'units': 'mm d$^{-1}$', 'long_name': 'Daily growth rate'}
-    ds['KGP'] = kgp
-    return ds
+
+    return kgp
 
 
 def esmf_apply_weights(weights, indata, shape_in, shape_out):

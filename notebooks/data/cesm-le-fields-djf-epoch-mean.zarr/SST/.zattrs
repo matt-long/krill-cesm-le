@@ -6,9 +6,8 @@
         "nlon"
     ],
     "cell_methods": "time: mean",
-    "coordinates": "TAREA TLONG ULONG ULAT KMT TLAT",
+    "coordinates": "ULAT TLONG TAREA KMT TLAT ULONG",
     "grid_loc": "3111",
     "long_name": "Potential Temperature",
-    "note": "bias corrected using HadISST; reference period 1981-2015",
     "units": "degC"
 }

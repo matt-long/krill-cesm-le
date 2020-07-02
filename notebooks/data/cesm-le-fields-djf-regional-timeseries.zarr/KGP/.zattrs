@@ -6,5 +6,6 @@
         "region"
     ],
     "long_name": "Daily growth rate",
+    "notes": "computed using raw model field",
     "units": "mm d$^{-1}$"
 }

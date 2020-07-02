@@ -7,6 +7,5 @@
     "cell_methods": "time: mean",
     "grid_loc": "3111",
     "long_name": "Potential Temperature",
-    "note": "bias corrected using HadISST; reference period 1981-2015",
     "units": "degC"
 }

@@ -40,7 +40,7 @@
                 "nlon"
             ],
             "cell_methods": "time: mean",
-            "coordinates": "TAREA TLONG ULONG ULAT KMT TLAT",
+            "coordinates": "ULAT TLONG TAREA KMT TLAT ULONG",
             "grid_loc": "3114",
             "long_name": "Surface chlorophyll",
             "units": "mg/m^3"
@@ -79,7 +79,7 @@
                 "nlon"
             ],
             "cell_methods": "time: mean",
-            "coordinates": "TAREA TLONG ULONG ULAT KMT TLAT",
+            "coordinates": "ULAT TLONG TAREA KMT TLAT ULONG",
             "grid_loc": "2110",
             "long_name": "Ice Fraction from Coupler",
             "units": "fraction"
@@ -120,8 +120,50 @@
                 "nlat",
                 "nlon"
             ],
-            "coordinates": "TAREA TLONG ULONG ULAT KMT TLAT",
+            "coordinates": "ULAT TLONG TAREA KMT TLAT ULONG",
             "long_name": "Daily growth rate",
+            "notes": "computed using raw model field",
+            "units": "mm d$^{-1}$"
+        },
+        "KGP_bias_corr/.zarray": {
+            "chunks": [
+                1,
+                1,
+                17,
+                47,
+                160
+            ],
+            "compressor": {
+                "blocksize": 0,
+                "clevel": 5,
+                "cname": "lz4",
+                "id": "blosc",
+                "shuffle": 1
+            },
+            "dtype": "<f8",
+            "fill_value": "NaN",
+            "filters": null,
+            "order": "C",
+            "shape": [
+                2,
+                3,
+                34,
+                93,
+                320
+            ],
+            "zarr_format": 2
+        },
+        "KGP_bias_corr/.zattrs": {
+            "_ARRAY_DIMENSIONS": [
+                "epoch",
+                "length",
+                "member_id",
+                "nlat",
+                "nlon"
+            ],
+            "coordinates": "ULAT TLONG TAREA KMT TLAT ULONG",
+            "long_name": "Daily growth rate",
+            "notes": "computed using bias corrected fields",
             "units": "mm d$^{-1}$"
         },
         "KMT/.zarray": {
@@ -189,13 +231,12 @@
                 "nlon"
             ],
             "cell_methods": "time: mean",
-            "coordinates": "TAREA TLONG ULONG ULAT KMT TLAT",
+            "coordinates": "ULAT TLONG TAREA KMT TLAT ULONG",
             "grid_loc": "3111",
             "long_name": "Potential Temperature",
-            "note": "bias corrected using HadISST; reference period 1981-2015",
             "units": "degC"
         },
-        "SST_orig/.zarray": {
+        "SST_bias_corr/.zarray": {
             "chunks": [
                 1,
                 9,
@@ -221,7 +262,7 @@
             ],
             "zarr_format": 2
         },
-        "SST_orig/.zattrs": {
+        "SST_bias_corr/.zattrs": {
             "_ARRAY_DIMENSIONS": [
                 "epoch",
                 "member_id",
@@ -229,9 +270,10 @@
                 "nlon"
             ],
             "cell_methods": "time: mean",
-            "coordinates": "TAREA TLONG ULONG ULAT KMT TLAT",
+            "coordinates": "ULAT TLONG TAREA KMT TLAT ULONG",
             "grid_loc": "3111",
             "long_name": "Potential Temperature",
+            "note": "bias corrected using HadISST; reference period 1981-2015",
             "units": "degC"
         },
         "TAREA/.zarray": {

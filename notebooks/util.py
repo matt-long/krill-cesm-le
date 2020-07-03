@@ -570,3 +570,24 @@ class regridder(object):
             da_out = da_out.where(self.mask_dst.T)
 
         return da_out
+    
+    
+def label_plots(fig, axs, xoff=-0.04, yoff=0.02):
+    """Add a letter to subplots
+    
+    Parameters
+    ----------
+    fig : matplotlib.pyplot `figure`
+    axs : list matplotlib.pyplot `axis` objects
+    xoff : offset distance in x
+    yoff : offset distance in y
+    """
+    alp = [chr(i).upper() for i in range(97,97+26)]
+    for i, ax in enumerate(axs):    
+        p = ax.get_position()
+        x = p.x0 + xoff
+        y = p.y1 + yoff
+        fig.text(x, y , f'{alp[i]}',
+                 fontsize=14,
+                 fontweight='semibold')    
+            

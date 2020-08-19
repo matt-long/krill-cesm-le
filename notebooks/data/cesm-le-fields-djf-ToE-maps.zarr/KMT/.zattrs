@@ -1,0 +1,9 @@
+{
+    "_ARRAY_DIMENSIONS": [
+        "nlat",
+        "nlon"
+    ],
+    "coordinates": "TLONG TLAT",
+    "long_name": "k Index of Deepest Grid Cell on T Grid",
+    "missing_value": -2147483647
+}

@@ -1,0 +1,8 @@
+{
+    "_ARRAY_DIMENSIONS": [
+        "length",
+        "nlat",
+        "nlon"
+    ],
+    "coordinates": "TLONG ULAT TAREA ULONG TLAT KMT"
+}

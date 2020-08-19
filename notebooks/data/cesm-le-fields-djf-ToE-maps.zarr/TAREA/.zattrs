@@ -1,0 +1,10 @@
+{
+    "_ARRAY_DIMENSIONS": [
+        "nlat",
+        "nlon"
+    ],
+    "coordinates": "TLONG TLAT",
+    "long_name": "area of T cells",
+    "missing_value": 9.969209968386869e+36,
+    "units": "centimeter^2"
+}

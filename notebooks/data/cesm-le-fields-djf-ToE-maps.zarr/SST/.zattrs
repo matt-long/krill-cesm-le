@@ -3,5 +3,5 @@
         "nlat",
         "nlon"
     ],
-    "coordinates": "TLAT TAREA ULONG ULAT KMT TLONG"
+    "coordinates": "ULONG TLONG TLAT TAREA ULAT KMT"
 }

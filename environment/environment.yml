@@ -11,7 +11,7 @@ dependencies:
 - cmocean
 - dask==2.14.0
 - distributed==2.14.0
-- dask-jobqueue
+- dask-jobqueue=0.7.1
 - dask-mpi
 - esmlab
 - esmpy
@@ -24,12 +24,14 @@ dependencies:
 - matplotlib
 - metpy
 - nc-time-axis
+- ncar-jobqueue
 - netcdf4
 - numba
 - numpy
 - pandas
 - pint
 - pip
+- pop-tools
 - proj>=7.0.0
 - pyproj>=2.6.0
 - pytest
@@ -49,7 +51,5 @@ dependencies:
 - xrft
 - zarr
 - pip:
-  - git+https://github.com/NCAR/pop-tools.git
-  - git+https://github.com/matt-long/xpersist.git
-  - ncar-jobqueue
+  - git+https://github.com/NCAR/xpersist.git
 
